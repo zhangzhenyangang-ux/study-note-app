@@ -1,485 +1,122 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="theme-color" content="#fff8e9">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fff8e8">
 <title>Study Note</title>
 <style>
-:root {
-  --bg:#fff9ef;
-  --yellow:#f5d58b;
-  --dark:#493a25;
-  --sub:#9b835e;
-  --white:#fff;
-  --line:#f0e7d7;
-}
-* {box-sizing:border-box}
-body {
-  margin:0;
-  background:var(--bg);
-  color:var(--dark);
-  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
-}
-header {
-  padding:23px 19px 12px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-header h1 {margin:0;font-size:25px}
-header p {margin:5px 0;color:var(--sub);font-size:12px}
-main {padding:8px 16px 100px;max-width:650px;margin:auto}
-.card {
-  background:white;
-  padding:17px;
-  border-radius:18px;
-  margin-bottom:13px;
-  box-shadow:0 3px 12px #8e704015;
-}
-h2 {font-size:16px;margin:0 0 13px}
-.small {font-size:12px;color:var(--sub)}
-.grid {display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.number {font-size:27px;font-weight:bold;margin-top:8px}
-button,input,select,textarea {font:inherit}
-button {
-  border:0;border-radius:11px;padding:11px 14px;
-  background:var(--yellow);color:var(--dark);
-  cursor:pointer;font-weight:600;
-}
-button.secondary {background:#f6f2e9}
-button.danger {background:#f8e5df;color:#994d3c}
-button:active {opacity:.7}
-input,select,textarea {
-  width:100%;padding:12px;border:1px solid var(--line);
-  border-radius:11px;background:#fffdf9;color:var(--dark);
-  margin:5px 0 12px;
-}
-textarea {min-height:75px}
-label {font-size:13px;font-weight:600}
-.actions {display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
-.subject {
-  display:flex;justify-content:space-between;align-items:center;
-  padding:12px 0;border-bottom:1px solid var(--line);gap:8px;
-}
-.subject:last-child {border:0}
-.subject-name {font-weight:600}
-.tag {
-  display:inline-block;background:#fff2d5;color:#88662c;
-  padding:5px 9px;border-radius:20px;font-size:11px;
-}
-nav {
-  position:fixed;bottom:0;left:0;width:100%;
-  display:flex;justify-content:space-around;
-  background:#fff;padding:9px 2px calc(9px + env(safe-area-inset-bottom));
-  border-top:1px solid var(--line);z-index:10;
-}
-nav button {
-  background:transparent;padding:6px 3px;
-  font-size:11px;color:var(--sub);font-weight:500;
-}
-nav button.active {color:#a97922;font-weight:bold}
-.nav-icon {font-size:20px;display:block;margin-bottom:3px}
-.page {display:none}
-.page.active {display:block}
-.empty {text-align:center;padding:20px;color:var(--sub);font-size:13px}
-.item {padding:12px 0;border-bottom:1px solid var(--line)}
-.item:last-child {border:0}
-.item strong {font-size:14px}
-.item p {font-size:12px;color:var(--sub);margin:5px 0}
-table {width:100%;border-collapse:collapse;font-size:12px}
-td,th {padding:9px 5px;border-bottom:1px solid var(--line);text-align:left}
-th {color:var(--sub)}
-.hidden {display:none}
-.photo-preview {width:100%;max-height:240px;object-fit:contain;border-radius:12px}
+:root{--yellow:#f4c95d;--yellow2:#fff0bd;--ink:#35332d;--muted:#77736a;--paper:#fffdf8;--line:#eee6d5;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:#fffaf0;color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans JP",sans-serif;padding-bottom:86px}
+header{padding:22px 18px 16px;background:linear-gradient(135deg,#fff4ce,#fffdf8);border-bottom:1px solid var(--line)}
+header .eyebrow{font-size:12px;color:#8d7440;letter-spacing:.08em}h1{font-size:25px;margin:4px 0;font-weight:800}header p{margin:4px 0 0;color:var(--muted);font-size:13px}
+main{max-width:760px;margin:0 auto;padding:16px}
+nav{position:fixed;z-index:5;bottom:0;left:0;right:0;display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-top:1px solid var(--line);padding:8px 5px calc(8px + env(safe-area-inset-bottom));box-shadow:0 -4px 18px #4a3b1410}
+nav button{border:0;background:none;color:#817b70;font-size:12px;padding:7px 2px;border-radius:12px}nav button b{display:block;font-size:19px;margin-bottom:2px}nav button.active{background:var(--yellow2);color:#5e4816;font-weight:700}
+h2{font-size:20px;margin:6px 0 14px}h3{font-size:15px;margin:0 0 10px}
+.card{background:#fff;border:1px solid var(--line);border-radius:17px;padding:15px;margin:12px 0;box-shadow:0 3px 12px #59430a08}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.muted{color:var(--muted);font-size:13px}.pill{display:inline-block;border-radius:99px;background:#fff3ce;padding:4px 9px;font-size:12px;color:#765b1d}
+button,.btn{cursor:pointer}button.primary,.primary{border:0;background:var(--yellow);color:#3e3218;border-radius:12px;padding:10px 14px;font-weight:700}button.secondary{border:1px solid var(--line);background:#fff;border-radius:11px;padding:9px 12px;color:var(--ink)}button.danger{border:1px solid #f0c9c2;background:#fff7f5;color:#a34032;border-radius:10px;padding:8px 10px}
+input,select,textarea{width:100%;border:1px solid #e5ddce;border-radius:10px;padding:10px;background:#fff;color:var(--ink);font:inherit;margin:5px 0 10px}label{font-size:13px;font-weight:650;display:block;margin-top:7px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.actions{display:flex;gap:8px;flex-wrap:wrap}.empty{padding:15px;text-align:center;color:var(--muted);font-size:13px}.item{padding:10px 0;border-top:1px solid #f1ecdf}.item:first-child{border-top:0}.item strong{font-size:14px}.thumbs{display:flex;gap:8px;overflow:auto}.thumbs img{width:76px;height:76px;object-fit:cover;border-radius:10px}
+section[hidden]{display:none}.notice{background:#fff8e8;border:1px solid #f1dfac;border-radius:12px;padding:11px;font-size:13px;color:#6c5726}
+canvas{width:100%;height:230px;display:block}.scoreline{display:flex;justify-content:space-between;font-size:13px;padding:7px 0;border-top:1px solid #f1ecdf}
+@media(min-width:650px){header{padding-left:max(22px,calc((100% - 760px)/2));padding-right:max(22px,calc((100% - 760px)/2))}}
 </style>
 </head>
 <body>
-
-<header>
- <div>
-  <h1>Study Note ☀️</h1>
-  <p>今日も少しずつ。</p>
- </div>
- <span style="font-size:26px">📚</span>
-</header>
-
+<header><div class="eyebrow">YOUR STUDY PARTNER</div><h1>Study Note</h1><p>毎日の学習を、少しずつ整理しよう。</p></header>
 <main>
-
-<section id="home" class="page active">
- <div class="card">
-  <div class="small" id="today"></div>
-  <h2 style="font-size:21px;margin-top:9px">今日も頑張ろう！</h2>
-  <p class="small">今日の学習状況を確認しよう。</p>
- </div>
-
- <div class="card">
-  <h2>☀️ 今日の勉強おすすめ</h2>
-  <div id="recommend" class="small">教科を登録するとおすすめを表示するよ。</div>
- </div>
-
- <div class="grid">
-  <div class="card">
-   <div class="small">最新成績</div>
-   <div class="number" id="latest">--点</div>
-  </div>
-  <div class="card">
-   <div class="small">登録教科</div>
-   <div class="number" id="count">0教科</div>
-  </div>
- </div>
-
- <div class="card">
-  <h2>📊 平均点</h2>
-  <div class="number" id="average">--点</div>
- </div>
-
- <div class="card">
-  <h2>📅 今日の時間割</h2>
-  <div id="todaySchedule" class="small">時間割はまだ登録されていません。</div>
- </div>
-
- <div class="card">
-  <h2>🔔 復習が必要な問題</h2>
-  <div id="reviewNotice" class="small">復習問題はまだありません。</div>
- </div>
+<section id="home">
+<h2>ホーム</h2>
+<div class="card"><div class="row"><h3>今日の勉強おすすめ</h3><span class="pill" id="todayLabel"></span></div><div id="recommend" class="muted">時間割や復習記録を登録すると、今日のおすすめが表示されるよ。</div></div>
+<div class="grid2">
+<div class="card"><div class="muted">最新テスト平均</div><div style="font-size:27px;font-weight:800" id="latestAvg">--点</div></div>
+<div class="card"><div class="muted">登録テスト数</div><div style="font-size:27px;font-weight:800" id="testCount">0</div></div>
+</div>
+<div class="card"><h3>今日の時間割</h3><div id="todaySchedule" class="empty">設定から時間割を登録してね。</div></div>
+<div class="card"><h3>復習のお知らせ</h3><div id="reviewList" class="empty">復習する問題はまだないよ。</div></div>
 </section>
-
-<section id="subjects" class="page">
- <div class="card">
-  <h2>📚 教科管理</h2>
-  <p class="small">好きなだけ教科を追加できるよ。</p>
-  <label>教科名</label>
-  <input id="subjectName" placeholder="例：数学">
-  <button onclick="addSubject()">＋ 教科を追加</button>
- </div>
- <div class="card">
-  <h2>登録した教科</h2>
-  <div id="subjectList"></div>
- </div>
- <div class="card">
-  <h2>📦 保管した教科</h2>
-  <div id="archiveList"></div>
- </div>
+<section id="prints" hidden>
+<h2>プリント</h2>
+<div class="card">
+<h3>プリントを追加</h3>
+<label>教科</label><select id="printSubject"></select>
+<label>プリント名</label><input id="printTitle" placeholder="例：二次関数のまとめ">
+<label>写真（複数選択OK）</label><input id="printPhotos" type="file" accept="image/*" capture="environment" multiple>
+<div id="photoPreview" class="thumbs"></div>
+<div class="actions"><button class="primary" id="savePrint">プリントを保存</button></div>
+</div>
+<div class="card"><h3>プリント一覧</h3><div id="printList" class="empty">まだプリントはありません。</div></div>
+<div class="card"><h3>まとめ・問題作成</h3><div class="notice">写真からAIで要約・問題を作る機能は、AIサービスとの安全な接続が必要です。この版ではまだ実行できません。</div><label>まとめ方</label><select disabled><option>重要ポイントを箇条書き</option><option>授業内容をやさしく解説</option><option>用語・公式一覧</option></select><label>問題形式</label><select disabled><option>選択問題・一問一答・記述問題</option></select><button class="secondary" disabled>AIで作成（準備中）</button></div>
 </section>
-
-<section id="grades" class="page">
- <div class="card">
-  <h2>📊 成績を記録</h2>
-  <label>教科</label>
-  <select id="gradeSubject"></select>
-  <label>テスト名</label>
-  <input id="testName" placeholder="例：2学期期末テスト">
-  <label>点数</label>
-  <input id="score" type="number" min="0" max="100" placeholder="100点満点">
-  <button onclick="addGrade()">成績を保存</button>
- </div>
- <div class="card">
-  <h2>成績一覧</h2>
-  <div id="gradeList"></div>
- </div>
+<section id="grades" hidden>
+<h2>成績</h2>
+<div class="card"><div class="row"><h3>テスト結果の推移</h3><select id="graphSubject" style="width:auto;min-width:120px"><option value="all">全教科</option></select></div><canvas id="gradeChart" width="700" height="260"></canvas><div id="legend" class="muted"></div></div>
+<div class="card"><h3>テスト記録</h3><div id="gradeList" class="empty">設定から点数を登録してね。</div></div>
 </section>
-
-<section id="review" class="page">
- <div class="card">
-  <h2>🔔 復習管理</h2>
-  <label>教科</label>
-  <select id="reviewSubject"></select>
-  <label>問題・復習内容</label>
-  <input id="reviewText" placeholder="例：二次関数の問題">
-  <label>メモ</label>
-  <textarea id="reviewMemo" placeholder="間違えたところなど"></textarea>
-  <button onclick="addReview()">復習問題を登録</button>
- </div>
- <div class="card">
-  <h2>復習リスト</h2>
-  <div id="reviewList"></div>
- </div>
+<section id="settings" hidden>
+<h2>設定</h2>
+<div class="card"><h3>教科の管理</h3><label>新しい教科</label><div class="row"><input id="newSubject" placeholder="例：数学" style="margin:5px 0"><button class="primary" id="addSubject">追加</button></div><div id="subjectList"></div></div>
+<div class="card"><h3>時間割の登録</h3><div class="grid2"><div><label>曜日</label><select id="day"><option>月</option><option>火</option><option>水</option><option>木</option><option>金</option><option>土</option><option>日</option></select></div><div><label>時限</label><select id="period"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select></div></div><label>教科</label><select id="scheduleSubject"></select><button class="primary" id="addSchedule">時間割を追加</button><div id="scheduleList"></div></div>
+<div class="card"><h3>点数の記録</h3><label>テスト名</label><input id="testName" placeholder="例：2学期期末テスト"><div class="grid2"><div><label>教科</label><select id="scoreSubject"></select></div><div><label>点数（100点満点）</label><input id="scoreValue" type="number" min="0" max="100" placeholder="80"></div></div><label>実施日</label><input id="testDate" type="date"><button class="primary" id="addScore">点数を保存</button><div id="settingsScoreList"></div></div>
+<div class="card"><h3>データのバックアップ</h3><p class="muted">このアプリのデータは、今使っているブラウザ内に保存されます。別の端末と自動同期はされません。機種変更前や定期的にバックアップを保存してね。</p><div class="actions"><button class="secondary" id="exportData">バックアップを書き出す</button><label class="secondary" style="display:inline-block;padding:9px 12px;border-radius:11px">バックアップを読み込む<input id="importData" type="file" accept="application/json" hidden></label></div></div>
 </section>
-
-<section id="schedule" class="page">
- <div class="card">
-  <h2>📅 時間割を登録</h2>
-  <label>曜日</label>
-  <select id="day">
-   <option>月曜日</option><option>火曜日</option>
-   <option>水曜日</option><option>木曜日</option>
-   <option>金曜日</option><option>土曜日</option>
-   <option>日曜日</option>
-  </select>
-  <label>時間</label>
-  <input id="period" placeholder="例：1時間目">
-  <label>教科</label>
-  <select id="scheduleSubject"></select>
-  <button onclick="addSchedule()">時間割を追加</button>
- </div>
- <div class="card">
-  <h2>登録した時間割</h2>
-  <div id="scheduleList"></div>
- </div>
-</section>
-
-<section id="print" class="page">
- <div class="card">
-  <h2>📷 プリント・写真</h2>
-  <p class="small">授業プリントを撮影、または写真から選択できるよ。</p>
-  <label>写真を選ぶ</label>
-  <input type="file" id="photo" accept="image/*" capture="environment" onchange="showPhoto(event)">
-  <img id="preview" class="photo-preview hidden">
-  <p class="small" id="photoStatus">写真を選択するとここに表示されます。</p>
-  <div class="actions">
-   <button class="secondary" onclick="clearPhoto()">写真を解除</button>
-  </div>
- </div>
- <div class="card">
-  <h2>AIプリント要約</h2>
-  <p class="small">AIによる読み取り・要約機能は、AIサービスとの接続後に利用できるようにするよ。</p>
- </div>
-</section>
-
-<section id="settings" class="page">
- <div class="card">
-  <h2>⚙️ 設定</h2>
-  <p class="small">Study Noteのデータについて</p>
-  <p class="small">現在のバージョンでは、このブラウザ内にデータを保存します。</p>
-  <button class="secondary" onclick="exportData()">データをバックアップ</button>
-  <label style="display:block;margin-top:18px">バックアップを復元</label>
-  <input type="file" accept=".json,application/json" onchange="importData(event)">
- </div>
-</section>
-
 </main>
-
 <nav>
- <button class="active" onclick="showPage('home',this)"><span class="nav-icon">🏠</span>ホーム</button>
- <button onclick="showPage('subjects',this)"><span class="nav-icon">📚</span>教科</button>
- <button onclick="showPage('print',this)"><span class="nav-icon">📷</span>プリント</button>
- <button onclick="showPage('grades',this)"><span class="nav-icon">📊</span>成績</button>
- <button onclick="showPage('settings',this)"><span class="nav-icon">⚙️</span>設定</button>
+<button class="active" data-tab="home"><b>⌂</b>ホーム</button>
+<button data-tab="prints"><b>▤</b>プリント</button>
+<button data-tab="grades"><b>▥</b>成績</button>
+<button data-tab="settings"><b>⚙</b>設定</button>
 </nav>
-
 <script>
-const KEY='studyNoteDataV1';
-let data={subjects:[],grades:[],reviews:[],schedules:[]};
-
-function load(){
- try {
-  const saved=localStorage.getItem(KEY);
-  if(saved) data=JSON.parse(saved);
- } catch(e) {console.log(e)}
-}
-function save(){
- localStorage.setItem(KEY,JSON.stringify(data));
- render();
-}
-function esc(s){
- return String(s).replace(/[&<>"']/g,c=>({
-  '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
- }[c]));
-}
-function showPage(id,btn){
- document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
- document.getElementById(id).classList.add('active');
- document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));
- if(btn) btn.classList.add('active');
- render();
-}
-function activeSubjects(){
- return data.subjects.filter(s=>!s.archived);
-}
-function options(id){
- const el=document.getElementById(id);
- const old=el.value;
- el.innerHTML=activeSubjects().map(s=>
-  `<option value="${s.id}">${esc(s.name)}</option>`
- ).join('');
- if(activeSubjects().some(s=>s.id===old)) el.value=old;
-}
-function addSubject(){
- const name=document.getElementById('subjectName').value.trim();
- if(!name)return alert('教科名を入力してね。');
- data.subjects.push({id:Date.now()+Math.random(),name,archived:false});
- document.getElementById('subjectName').value='';
- save();
-}
-function renameSubject(id){
- const s=data.subjects.find(x=>x.id===id);
- const n=prompt('新しい教科名',s.name);
- if(n && n.trim()){s.name=n.trim();save();}
-}
-function archiveSubject(id){
- const s=data.subjects.find(x=>x.id===id);
- s.archived=true;save();
-}
-function restoreSubject(id){
- const s=data.subjects.find(x=>x.id===id);
- s.archived=false;save();
-}
-function deleteSubject(id){
- if(!confirm('この教科を完全に削除する？'))return;
- data.subjects=data.subjects.filter(s=>s.id!==id);
- save();
-}
-function moveSubject(id,step){
- const i=data.subjects.findIndex(s=>s.id===id);
- const j=i+step;
- if(j<0||j>=data.subjects.length)return;
- [data.subjects[i],data.subjects[j]]=[data.subjects[j],data.subjects[i]];
- save();
-}
-function addGrade(){
- const subject=document.getElementById('gradeSubject').value;
- const score=Number(document.getElementById('score').value);
- const name=document.getElementById('testName').value.trim();
- if(!subject)return alert('先に教科を登録してね。');
- if(!name || document.getElementById('score').value==='' || score<0 || score>100)
-  return alert('テスト名と0～100点の点数を入力してね。');
- data.grades.unshift({subject,name,score,date:new Date().toLocaleDateString('ja-JP')});
- document.getElementById('testName').value='';
- document.getElementById('score').value='';
- save();
-}
-function addReview(){
- const subject=document.getElementById('reviewSubject').value;
- const text=document.getElementById('reviewText').value.trim();
- const memo=document.getElementById('reviewMemo').value.trim();
- if(!subject)return alert('先に教科を登録してね。');
- if(!text)return alert('復習内容を入力してね。');
- data.reviews.push({id:Date.now(),subject,text,memo,done:false});
- document.getElementById('reviewText').value='';
- document.getElementById('reviewMemo').value='';
- save();
-}
-function toggleReview(id){
- const r=data.reviews.find(x=>x.id===id);
- r.done=!r.done;save();
-}
-function deleteReview(id){
- data.reviews=data.reviews.filter(x=>x.id!==id);save();
-}
-function addSchedule(){
- const subject=document.getElementById('scheduleSubject').value;
- const day=document.getElementById('day').value;
- const period=document.getElementById('period').value.trim();
- if(!subject)return alert('先に教科を登録してね。');
- if(!period)return alert('時間を入力してね。');
- data.schedules.push({id:Date.now(),subject,day,period});
- document.getElementById('period').value='';
- save();
-}
-function deleteSchedule(id){
- data.schedules=data.schedules.filter(x=>x.id!==id);save();
-}
-function subjectName(id){
- const s=data.subjects.find(x=>x.id==id);
- return s?s.name:'削除された教科';
-}
+const KEY='studyNoteData_v2';
+const fresh=()=>({subjects:[{id:crypto.randomUUID(),name:'国語',archived:false},{id:crypto.randomUUID(),name:'数学',archived:false},{id:crypto.randomUUID(),name:'英語',archived:false},{id:crypto.randomUUID(),name:'理科',archived:false},{id:crypto.randomUUID(),name:'社会',archived:false}],schedule:[],scores:[],prints:[],reviews:[]});
+let data;try{data=JSON.parse(localStorage.getItem(KEY))||fresh()}catch(e){data=fresh()}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(data))}catch(e){alert('保存容量がいっぱいかもしれません。写真を減らすか、バックアップを取ってください。')}render()};
+const active=()=>data.subjects.filter(s=>!s.archived);
+const subj=id=>data.subjects.find(s=>s.id===id)?.name||'削除済みの教科';
+const $=id=>document.getElementById(id);
+function fillSelect(id,includeArchived=false){const el=$(id),old=el.value;el.innerHTML='';(includeArchived?data.subjects:active()).forEach(s=>{let o=document.createElement('option');o.value=s.id;o.textContent=s.name+(s.archived?'（保管中）':'');el.append(o)});if([...el.options].some(o=>o.value===old))el.value=old}
+function showTab(tab){document.querySelectorAll('main section').forEach(s=>s.hidden=s.id!==tab);document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));if(tab==='grades')drawChart()}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
+$('todayLabel').textContent=new Date().toLocaleDateString('ja-JP',{month:'numeric',day:'numeric',weekday:'short'});
 function render(){
- ['gradeSubject','reviewSubject','scheduleSubject'].forEach(options);
-
- document.getElementById('count').textContent=activeSubjects().length+'教科';
- const avg=data.grades.length?
-  Math.round(data.grades.reduce((a,b)=>a+b.score,0)/data.grades.length):null;
- document.getElementById('average').textContent=avg===null?'--点':avg+'点';
- document.getElementById('latest').textContent=data.grades.length?data.grades[0].score+'点':'--点';
-
- document.getElementById('subjectList').innerHTML=activeSubjects().length?
- activeSubjects().map(s=>`
- <div class="subject">
-  <span class="subject-name">${esc(s.name)}</span>
-  <div class="actions">
-   <button class="secondary" onclick="renameSubject(${s.id})">変更</button>
-   <button class="secondary" onclick="moveSubject(${s.id},-1)">↑</button>
-   <button class="secondary" onclick="moveSubject(${s.id},1)">↓</button>
-   <button class="secondary" onclick="archiveSubject(${s.id})">保管</button>
-  </div>
- </div>`).join(''):'<div class="empty">まだ教科がありません。</div>';
-
- const archived=data.subjects.filter(s=>s.archived);
- document.getElementById('archiveList').innerHTML=archived.length?
- archived.map(s=>`<div class="subject"><span>${esc(s.name)}</span>
- <div class="actions">
- <button onclick="restoreSubject(${s.id})">復元</button>
- <button class="danger" onclick="deleteSubject(${s.id})">削除</button>
- </div></div>`).join(''):'<div class="empty">保管した教科はありません。</div>';
-
- document.getElementById('gradeList').innerHTML=data.grades.length?
- data.grades.map(g=>`<div class="item"><strong>${esc(subjectName(g.subject))}・${esc(g.name)}</strong>
- <div class="number">${g.score}点</div><p>${esc(g.date)}</p></div>`).join(''):
- '<div class="empty">成績はまだありません。</div>';
-
- document.getElementById('reviewList').innerHTML=data.reviews.length?
- data.reviews.map(r=>`<div class="item">
- <strong>${esc(subjectName(r.subject))}：${esc(r.text)}</strong>
- <p>${esc(r.memo)}</p>
- <span class="tag">${r.done?'復習済み':'復習が必要'}</span>
- <div class="actions">
- <button onclick="toggleReview(${r.id})">${r.done?'未完了に戻す':'復習完了'}</button>
- <button class="danger" onclick="deleteReview(${r.id})">削除</button>
- </div></div>`).join(''):'<div class="empty">復習問題はまだありません。</div>';
-
- document.getElementById('scheduleList').innerHTML=data.schedules.length?
- data.schedules.map(s=>`<div class="item">
- <strong>${esc(s.day)}・${esc(s.period)}</strong>
- <p>${esc(subjectName(s.subject))}</p>
- <button class="danger" onclick="deleteSchedule(${s.id})">削除</button>
- </div>`).join(''):'<div class="empty">時間割はまだありません。</div>';
-
- const days=['日曜日','月曜日','火曜日','水曜日','木曜日','金曜日','土曜日'];
- const today=days[new Date().getDay()];
- const todayItems=data.schedules.filter(s=>s.day===today);
- document.getElementById('todaySchedule').innerHTML=todayItems.length?
- todayItems.map(s=>`${esc(s.period)}：${esc(subjectName(s.subject))}`).join('<br>'):
- '今日の時間割は登録されていません。';
-
- const pending=data.reviews.filter(r=>!r.done);
- document.getElementById('reviewNotice').textContent=pending.length?
- pending.length+'件の復習が必要だよ。':'復習が必要な問題はありません。';
-
- const rec=activeSubjects();
- document.getElementById('recommend').textContent= pending.length?
- 'まずは復習が必要な問題に取り組もう。':
- rec.length?'登録した教科を順番に復習してみよう。':
- 'まずは教科を登録してみよう。';
+['printSubject','scheduleSubject','scoreSubject'].forEach(id=>fillSelect(id));
+fillSelect('graphSubject');$('graphSubject').insertAdjacentHTML('afterbegin','<option value="all">全教科</option>');$('graphSubject').value='all';
+const today=['日','月','火','水','木','金','土'][new Date().getDay()];
+let todays=data.schedule.filter(x=>x.day===today).sort((a,b)=>a.period-b.period);
+$('todaySchedule').innerHTML=todays.length?todays.map(x=>`<div class="item">${x.period}限　<strong>${subj(x.subject)}</strong></div>`).join(''):'<div class="empty">今日の時間割はありません。設定から登録できるよ。</div>';
+$('recommend').innerHTML=todays.length?`今日は <strong>${todays.map(x=>subj(x.subject)).filter((v,i,a)=>a.indexOf(v)===i).join('・')}</strong> の授業内容を短く復習してみよう。`:'時間割を登録すると、今日の教科をおすすめするよ。';
+$('reviewList').innerHTML=data.reviews.length?data.reviews.map((r,i)=>`<div class="item row"><span>${esc(r.title)} <span class="pill">${esc(r.subjectName)}</span></span><button class="secondary" onclick="removeReview(${i})">完了</button></div>`).join(''):'<div class="empty">復習する問題はまだないよ。</div>';
+$('latestAvg').textContent=data.scores.length?Math.round(data.scores.slice(-5).reduce((a,x)=>a+x.score,0)/Math.min(5,data.scores.length))+'点':'--点';$('testCount').textContent=data.scores.length;
+$('subjectList').innerHTML=data.subjects.map(s=>`<div class="item row"><span><strong>${esc(s.name)}</strong> ${s.archived?'<span class="pill">保管中</span>':''}</span><span class="actions"><button class="secondary" onclick="renameSub('${s.id}')">名前変更</button>${s.archived?`<button class="secondary" onclick="restoreSub('${s.id}')">復元</button>`:`<button class="secondary" onclick="archiveSub('${s.id}')">保管</button>`}<button class="danger" onclick="deleteSub('${s.id}')">削除</button></span></div>`).join('');
+$('scheduleList').innerHTML=data.schedule.length?data.schedule.map((x,i)=>`<div class="item row"><span>${x.day}曜 ${x.period}限　${esc(subj(x.subject))}</span><button class="danger" onclick="delSchedule(${i})">削除</button></div>`).join(''):'<div class="empty">時間割はまだありません。</div>';
+$('settingsScoreList').innerHTML=data.scores.length?data.scores.map((x,i)=>`<div class="scoreline"><span>${esc(x.date||'日付なし')}　${esc(x.test)} / ${esc(subj(x.subject))}</span><span><b>${x.score}点</b> <button class="secondary" onclick="editScore(${i})">編集</button> <button class="danger" onclick="delScore(${i})">削除</button></span></div>`).join(''):'<div class="empty">点数はまだありません。</div>';
+$('gradeList').innerHTML=data.scores.length?data.scores.slice().reverse().map(x=>`<div class="scoreline"><span>${esc(x.test)}・${esc(subj(x.subject))}</span><b>${x.score}点</b></div>`).join(''):'<div class="empty">設定から点数を登録してね。</div>';
+$('printList').innerHTML=data.prints.length?data.prints.slice().reverse().map((p,i)=>`<div class="item"><div class="row"><div><strong>${esc(p.title)}</strong><div class="muted">${esc(subj(p.subject))} ・ 写真${p.photos.length}枚</div></div><div class="actions"><button class="secondary" onclick="editPrint('${p.id}')">編集</button><button class="secondary" onclick="addReview('${p.id}')">復習へ</button><button class="danger" onclick="delPrint('${p.id}')">削除</button></div></div><div class="thumbs">${p.photos.map(src=>`<img src="${src}">`).join('')}</div></div>`).join(''):'<div class="empty">まだプリントはありません。</div>';
 }
-function showPhoto(e){
- const file=e.target.files[0];
- if(!file)return;
- const url=URL.createObjectURL(file);
- const img=document.getElementById('preview');
- img.src=url;img.classList.remove('hidden');
- document.getElementById('photoStatus').textContent='写真を選択しました。AI要約には別途AI接続が必要です。';
-}
-function clearPhoto(){
- document.getElementById('photo').value='';
- document.getElementById('preview').classList.add('hidden');
- document.getElementById('photoStatus').textContent='写真を選択するとここに表示されます。';
-}
-function exportData(){
- const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
- const url=URL.createObjectURL(blob);
- const a=document.createElement('a');
- a.href=url;a.download='study-note-backup.json';a.click();
- URL.revokeObjectURL(url);
-}
-function importData(e){
- const file=e.target.files[0];if(!file)return;
- const reader=new FileReader();
- reader.onload=()=>{
-  try{
-   const d=JSON.parse(reader.result);
-   if(!d.subjects||!d.grades||!d.reviews||!d.schedules)throw Error();
-   if(!confirm('現在のデータをバックアップの内容に置き換える？'))return;
-   data=d;save();alert('復元できたよ！');
-  }catch(err){alert('バックアップファイルを読み込めませんでした。');}
- };
- reader.readAsText(file);
-}
-document.getElementById('today').textContent=
- new Date().toLocaleDateString('ja-JP',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
-load();
-render();
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+$('addSubject').onclick=()=>{let n=$('newSubject').value.trim();if(!n)return;if(data.subjects.some(s=>s.name===n)){alert('同じ名前の教科があります');return}data.subjects.push({id:crypto.randomUUID(),name:n,archived:false});$('newSubject').value='';save()};
+window.renameSub=id=>{let s=data.subjects.find(x=>x.id===id),n=prompt('新しい教科名',s.name);if(n&&n.trim()){s.name=n.trim();save()}};
+window.archiveSub=id=>{data.subjects.find(x=>x.id===id).archived=true;save()};
+window.restoreSub=id=>{data.subjects.find(x=>x.id===id).archived=false;save()};
+window.deleteSub=id=>{if(!confirm('この教科を削除しますか？過去の点数・プリント記録は残ります。'))return;data.subjects=data.subjects.filter(x=>x.id!==id);data.schedule=data.schedule.filter(x=>x.subject!==id);save()};
+$('addSchedule').onclick=()=>{if(!$('scheduleSubject').value)return;data.schedule.push({day:$('day').value,period:+$('period').value,subject:$('scheduleSubject').value});save()};
+window.delSchedule=i=>{data.schedule.splice(i,1);save()};
+$('addScore').onclick=()=>{let test=$('testName').value.trim(),subject=$('scoreSubject').value,score=Number($('scoreValue').value);if(!test||!subject||$('scoreValue').value===''||score<0||score>100){alert('テスト名・教科・0〜100点を入力してね');return}data.scores.push({id:crypto.randomUUID(),test,subject,score,date:$('testDate').value});$('testName').value='';$('scoreValue').value='';save()};
+window.delScore=i=>{if(confirm('この点数を削除しますか？')){data.scores.splice(i,1);save()}};
+window.editScore=i=>{let x=data.scores[i],v=prompt('点数を入力（0〜100）',x.score);if(v===null)return;let n=Number(v);if(Number.isInteger(n)&&n>=0&&n<=100){x.score=n;save()}else alert('0〜100の整数を入力してね')};
+let pendingPhotos=[];
+$('printPhotos').onchange=async e=>{pendingPhotos=[];for(const f of [...e.target.files]){if(!f.type.startsWith('image/'))continue;let src=await new Promise(res=>{let r=new FileReader();r.onload=()=>res(r.result);r.readAsDataURL(f)});pendingPhotos.push(src)}$('photoPreview').innerHTML=pendingPhotos.map(src=>`<img src="${src}">`).join('')};
+$('savePrint').onclick=()=>{let title=$('printTitle').value.trim(),subject=$('printSubject').value;if(!title||!subject){alert('教科とプリント名を入力してね');return}data.prints.push({id:crypto.randomUUID(),title,subject,photos:pendingPhotos});$('printTitle').value='';$('printPhotos').value='';pendingPhotos=[];$('photoPreview').innerHTML='';save()};
+window.editPrint=id=>{let p=data.prints.find(x=>x.id===id),t=prompt('プリント名',p.title);if(t===null)return;let s=prompt('教科名を入力（現在：'+subj(p.subject)+'）',subj(p.subject));if(s!==null){let found=active().find(x=>x.name===s.trim());if(found)p.subject=found.id;p.title=t.trim()||p.title;save()}};
+window.delPrint=id=>{if(confirm('このプリントを削除しますか？')){data.prints=data.prints.filter(x=>x.id!==id);save()}};
+window.addReview=id=>{let p=data.prints.find(x=>x.id===id);data.reviews.push({title:p.title,subjectName:subj(p.subject)});save();alert('復習リストに追加したよ')};
+window.removeReview=i=>{data.reviews.splice(i,1);save()};
+$('exportData').onclick=()=>{let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='study-note-backup.json';a.click();URL.revokeObjectURL(a.href)};
+$('importData').onchange=async e=>{let f=e.target.files[0];if(!f)return;try{let obj=JSON.parse(await f.text());if(!obj.subjects||!obj.schedule||!obj.scores)throw Error();data=obj;save();alert('バックアップを読み込んだよ')}catch(err){alert('バックアップファイルを読み込めませんでした')}e.target.value=''};
+$('graphSubject').onchange=drawChart;
+function drawChart(){let c=$('gradeChart'),ctx=c.getContext('2d'),w=c.width,h=c.height;ctx.clearRect(0,0,w,h);let scores=data.scores,filter=$('graphSubject').value;let list=filter==='all'?scores:scores.filter(x=>x.subject===filter);ctx.strokeStyle='#e9e1d2';ctx.lineWidth=1;for(let k=0;k<=5;k++){let y=20+(h-50)*k/5;ctx.beginPath();ctx.moveTo(42,y);ctx.lineTo(w-12,y);ctx.stroke();ctx.fillStyle='#817b70';ctx.font='12px sans-serif';ctx.fillText(String(100-k*20),8,y+4)}let groups=filter==='all'?active():active().filter(s=>s.id===filter);let colors=['#d49a22','#6a9c83','#7b83bd','#d17f72','#7da8bd','#aa83b7'];groups.forEach((s,gi)=>{let arr=list.filter(x=>x.subject===s.id);if(!arr.length)return;ctx.strokeStyle=colors[gi%colors.length];ctx.fillStyle=colors[gi%colors.length];ctx.lineWidth=3;ctx.beginPath();arr.forEach((x,i)=>{let ix=scores.indexOf(x),px=48+(scores.length<=1?0:ix/(scores.length-1)*(w-75)),py=20+(100-x.score)/100*(h-50);if(i===0)ctx.moveTo(px,py);else ctx.lineTo(px,py)});ctx.stroke();arr.forEach(x=>{let ix=scores.indexOf(x),px=48+(scores.length<=1?0:ix/(scores.length-1)*(w-75)),py=20+(100-x.score)/100*(h-50);ctx.beginPath();ctx.arc(px,py,4,0,Math.PI*2);ctx.fill()})});$('legend').textContent=filter==='all'?'● '+groups.map((s,i)=>s.name).join('　● '):subj(filter)}
+render();showTab('home');
 </script>
-</body>
-</html>
+</body></html>
