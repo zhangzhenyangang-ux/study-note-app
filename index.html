@@ -1,0 +1,485 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#fff8e9">
+<title>Study Note</title>
+<style>
+:root {
+  --bg:#fff9ef;
+  --yellow:#f5d58b;
+  --dark:#493a25;
+  --sub:#9b835e;
+  --white:#fff;
+  --line:#f0e7d7;
+}
+* {box-sizing:border-box}
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--dark);
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
+}
+header {
+  padding:23px 19px 12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+header h1 {margin:0;font-size:25px}
+header p {margin:5px 0;color:var(--sub);font-size:12px}
+main {padding:8px 16px 100px;max-width:650px;margin:auto}
+.card {
+  background:white;
+  padding:17px;
+  border-radius:18px;
+  margin-bottom:13px;
+  box-shadow:0 3px 12px #8e704015;
+}
+h2 {font-size:16px;margin:0 0 13px}
+.small {font-size:12px;color:var(--sub)}
+.grid {display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.number {font-size:27px;font-weight:bold;margin-top:8px}
+button,input,select,textarea {font:inherit}
+button {
+  border:0;border-radius:11px;padding:11px 14px;
+  background:var(--yellow);color:var(--dark);
+  cursor:pointer;font-weight:600;
+}
+button.secondary {background:#f6f2e9}
+button.danger {background:#f8e5df;color:#994d3c}
+button:active {opacity:.7}
+input,select,textarea {
+  width:100%;padding:12px;border:1px solid var(--line);
+  border-radius:11px;background:#fffdf9;color:var(--dark);
+  margin:5px 0 12px;
+}
+textarea {min-height:75px}
+label {font-size:13px;font-weight:600}
+.actions {display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.subject {
+  display:flex;justify-content:space-between;align-items:center;
+  padding:12px 0;border-bottom:1px solid var(--line);gap:8px;
+}
+.subject:last-child {border:0}
+.subject-name {font-weight:600}
+.tag {
+  display:inline-block;background:#fff2d5;color:#88662c;
+  padding:5px 9px;border-radius:20px;font-size:11px;
+}
+nav {
+  position:fixed;bottom:0;left:0;width:100%;
+  display:flex;justify-content:space-around;
+  background:#fff;padding:9px 2px calc(9px + env(safe-area-inset-bottom));
+  border-top:1px solid var(--line);z-index:10;
+}
+nav button {
+  background:transparent;padding:6px 3px;
+  font-size:11px;color:var(--sub);font-weight:500;
+}
+nav button.active {color:#a97922;font-weight:bold}
+.nav-icon {font-size:20px;display:block;margin-bottom:3px}
+.page {display:none}
+.page.active {display:block}
+.empty {text-align:center;padding:20px;color:var(--sub);font-size:13px}
+.item {padding:12px 0;border-bottom:1px solid var(--line)}
+.item:last-child {border:0}
+.item strong {font-size:14px}
+.item p {font-size:12px;color:var(--sub);margin:5px 0}
+table {width:100%;border-collapse:collapse;font-size:12px}
+td,th {padding:9px 5px;border-bottom:1px solid var(--line);text-align:left}
+th {color:var(--sub)}
+.hidden {display:none}
+.photo-preview {width:100%;max-height:240px;object-fit:contain;border-radius:12px}
+</style>
+</head>
+<body>
+
+<header>
+ <div>
+  <h1>Study Note ☀️</h1>
+  <p>今日も少しずつ。</p>
+ </div>
+ <span style="font-size:26px">📚</span>
+</header>
+
+<main>
+
+<section id="home" class="page active">
+ <div class="card">
+  <div class="small" id="today"></div>
+  <h2 style="font-size:21px;margin-top:9px">今日も頑張ろう！</h2>
+  <p class="small">今日の学習状況を確認しよう。</p>
+ </div>
+
+ <div class="card">
+  <h2>☀️ 今日の勉強おすすめ</h2>
+  <div id="recommend" class="small">教科を登録するとおすすめを表示するよ。</div>
+ </div>
+
+ <div class="grid">
+  <div class="card">
+   <div class="small">最新成績</div>
+   <div class="number" id="latest">--点</div>
+  </div>
+  <div class="card">
+   <div class="small">登録教科</div>
+   <div class="number" id="count">0教科</div>
+  </div>
+ </div>
+
+ <div class="card">
+  <h2>📊 平均点</h2>
+  <div class="number" id="average">--点</div>
+ </div>
+
+ <div class="card">
+  <h2>📅 今日の時間割</h2>
+  <div id="todaySchedule" class="small">時間割はまだ登録されていません。</div>
+ </div>
+
+ <div class="card">
+  <h2>🔔 復習が必要な問題</h2>
+  <div id="reviewNotice" class="small">復習問題はまだありません。</div>
+ </div>
+</section>
+
+<section id="subjects" class="page">
+ <div class="card">
+  <h2>📚 教科管理</h2>
+  <p class="small">好きなだけ教科を追加できるよ。</p>
+  <label>教科名</label>
+  <input id="subjectName" placeholder="例：数学">
+  <button onclick="addSubject()">＋ 教科を追加</button>
+ </div>
+ <div class="card">
+  <h2>登録した教科</h2>
+  <div id="subjectList"></div>
+ </div>
+ <div class="card">
+  <h2>📦 保管した教科</h2>
+  <div id="archiveList"></div>
+ </div>
+</section>
+
+<section id="grades" class="page">
+ <div class="card">
+  <h2>📊 成績を記録</h2>
+  <label>教科</label>
+  <select id="gradeSubject"></select>
+  <label>テスト名</label>
+  <input id="testName" placeholder="例：2学期期末テスト">
+  <label>点数</label>
+  <input id="score" type="number" min="0" max="100" placeholder="100点満点">
+  <button onclick="addGrade()">成績を保存</button>
+ </div>
+ <div class="card">
+  <h2>成績一覧</h2>
+  <div id="gradeList"></div>
+ </div>
+</section>
+
+<section id="review" class="page">
+ <div class="card">
+  <h2>🔔 復習管理</h2>
+  <label>教科</label>
+  <select id="reviewSubject"></select>
+  <label>問題・復習内容</label>
+  <input id="reviewText" placeholder="例：二次関数の問題">
+  <label>メモ</label>
+  <textarea id="reviewMemo" placeholder="間違えたところなど"></textarea>
+  <button onclick="addReview()">復習問題を登録</button>
+ </div>
+ <div class="card">
+  <h2>復習リスト</h2>
+  <div id="reviewList"></div>
+ </div>
+</section>
+
+<section id="schedule" class="page">
+ <div class="card">
+  <h2>📅 時間割を登録</h2>
+  <label>曜日</label>
+  <select id="day">
+   <option>月曜日</option><option>火曜日</option>
+   <option>水曜日</option><option>木曜日</option>
+   <option>金曜日</option><option>土曜日</option>
+   <option>日曜日</option>
+  </select>
+  <label>時間</label>
+  <input id="period" placeholder="例：1時間目">
+  <label>教科</label>
+  <select id="scheduleSubject"></select>
+  <button onclick="addSchedule()">時間割を追加</button>
+ </div>
+ <div class="card">
+  <h2>登録した時間割</h2>
+  <div id="scheduleList"></div>
+ </div>
+</section>
+
+<section id="print" class="page">
+ <div class="card">
+  <h2>📷 プリント・写真</h2>
+  <p class="small">授業プリントを撮影、または写真から選択できるよ。</p>
+  <label>写真を選ぶ</label>
+  <input type="file" id="photo" accept="image/*" capture="environment" onchange="showPhoto(event)">
+  <img id="preview" class="photo-preview hidden">
+  <p class="small" id="photoStatus">写真を選択するとここに表示されます。</p>
+  <div class="actions">
+   <button class="secondary" onclick="clearPhoto()">写真を解除</button>
+  </div>
+ </div>
+ <div class="card">
+  <h2>AIプリント要約</h2>
+  <p class="small">AIによる読み取り・要約機能は、AIサービスとの接続後に利用できるようにするよ。</p>
+ </div>
+</section>
+
+<section id="settings" class="page">
+ <div class="card">
+  <h2>⚙️ 設定</h2>
+  <p class="small">Study Noteのデータについて</p>
+  <p class="small">現在のバージョンでは、このブラウザ内にデータを保存します。</p>
+  <button class="secondary" onclick="exportData()">データをバックアップ</button>
+  <label style="display:block;margin-top:18px">バックアップを復元</label>
+  <input type="file" accept=".json,application/json" onchange="importData(event)">
+ </div>
+</section>
+
+</main>
+
+<nav>
+ <button class="active" onclick="showPage('home',this)"><span class="nav-icon">🏠</span>ホーム</button>
+ <button onclick="showPage('subjects',this)"><span class="nav-icon">📚</span>教科</button>
+ <button onclick="showPage('print',this)"><span class="nav-icon">📷</span>プリント</button>
+ <button onclick="showPage('grades',this)"><span class="nav-icon">📊</span>成績</button>
+ <button onclick="showPage('settings',this)"><span class="nav-icon">⚙️</span>設定</button>
+</nav>
+
+<script>
+const KEY='studyNoteDataV1';
+let data={subjects:[],grades:[],reviews:[],schedules:[]};
+
+function load(){
+ try {
+  const saved=localStorage.getItem(KEY);
+  if(saved) data=JSON.parse(saved);
+ } catch(e) {console.log(e)}
+}
+function save(){
+ localStorage.setItem(KEY,JSON.stringify(data));
+ render();
+}
+function esc(s){
+ return String(s).replace(/[&<>"']/g,c=>({
+  '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+ }[c]));
+}
+function showPage(id,btn){
+ document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));
+ if(btn) btn.classList.add('active');
+ render();
+}
+function activeSubjects(){
+ return data.subjects.filter(s=>!s.archived);
+}
+function options(id){
+ const el=document.getElementById(id);
+ const old=el.value;
+ el.innerHTML=activeSubjects().map(s=>
+  `<option value="${s.id}">${esc(s.name)}</option>`
+ ).join('');
+ if(activeSubjects().some(s=>s.id===old)) el.value=old;
+}
+function addSubject(){
+ const name=document.getElementById('subjectName').value.trim();
+ if(!name)return alert('教科名を入力してね。');
+ data.subjects.push({id:Date.now()+Math.random(),name,archived:false});
+ document.getElementById('subjectName').value='';
+ save();
+}
+function renameSubject(id){
+ const s=data.subjects.find(x=>x.id===id);
+ const n=prompt('新しい教科名',s.name);
+ if(n && n.trim()){s.name=n.trim();save();}
+}
+function archiveSubject(id){
+ const s=data.subjects.find(x=>x.id===id);
+ s.archived=true;save();
+}
+function restoreSubject(id){
+ const s=data.subjects.find(x=>x.id===id);
+ s.archived=false;save();
+}
+function deleteSubject(id){
+ if(!confirm('この教科を完全に削除する？'))return;
+ data.subjects=data.subjects.filter(s=>s.id!==id);
+ save();
+}
+function moveSubject(id,step){
+ const i=data.subjects.findIndex(s=>s.id===id);
+ const j=i+step;
+ if(j<0||j>=data.subjects.length)return;
+ [data.subjects[i],data.subjects[j]]=[data.subjects[j],data.subjects[i]];
+ save();
+}
+function addGrade(){
+ const subject=document.getElementById('gradeSubject').value;
+ const score=Number(document.getElementById('score').value);
+ const name=document.getElementById('testName').value.trim();
+ if(!subject)return alert('先に教科を登録してね。');
+ if(!name || document.getElementById('score').value==='' || score<0 || score>100)
+  return alert('テスト名と0～100点の点数を入力してね。');
+ data.grades.unshift({subject,name,score,date:new Date().toLocaleDateString('ja-JP')});
+ document.getElementById('testName').value='';
+ document.getElementById('score').value='';
+ save();
+}
+function addReview(){
+ const subject=document.getElementById('reviewSubject').value;
+ const text=document.getElementById('reviewText').value.trim();
+ const memo=document.getElementById('reviewMemo').value.trim();
+ if(!subject)return alert('先に教科を登録してね。');
+ if(!text)return alert('復習内容を入力してね。');
+ data.reviews.push({id:Date.now(),subject,text,memo,done:false});
+ document.getElementById('reviewText').value='';
+ document.getElementById('reviewMemo').value='';
+ save();
+}
+function toggleReview(id){
+ const r=data.reviews.find(x=>x.id===id);
+ r.done=!r.done;save();
+}
+function deleteReview(id){
+ data.reviews=data.reviews.filter(x=>x.id!==id);save();
+}
+function addSchedule(){
+ const subject=document.getElementById('scheduleSubject').value;
+ const day=document.getElementById('day').value;
+ const period=document.getElementById('period').value.trim();
+ if(!subject)return alert('先に教科を登録してね。');
+ if(!period)return alert('時間を入力してね。');
+ data.schedules.push({id:Date.now(),subject,day,period});
+ document.getElementById('period').value='';
+ save();
+}
+function deleteSchedule(id){
+ data.schedules=data.schedules.filter(x=>x.id!==id);save();
+}
+function subjectName(id){
+ const s=data.subjects.find(x=>x.id==id);
+ return s?s.name:'削除された教科';
+}
+function render(){
+ ['gradeSubject','reviewSubject','scheduleSubject'].forEach(options);
+
+ document.getElementById('count').textContent=activeSubjects().length+'教科';
+ const avg=data.grades.length?
+  Math.round(data.grades.reduce((a,b)=>a+b.score,0)/data.grades.length):null;
+ document.getElementById('average').textContent=avg===null?'--点':avg+'点';
+ document.getElementById('latest').textContent=data.grades.length?data.grades[0].score+'点':'--点';
+
+ document.getElementById('subjectList').innerHTML=activeSubjects().length?
+ activeSubjects().map(s=>`
+ <div class="subject">
+  <span class="subject-name">${esc(s.name)}</span>
+  <div class="actions">
+   <button class="secondary" onclick="renameSubject(${s.id})">変更</button>
+   <button class="secondary" onclick="moveSubject(${s.id},-1)">↑</button>
+   <button class="secondary" onclick="moveSubject(${s.id},1)">↓</button>
+   <button class="secondary" onclick="archiveSubject(${s.id})">保管</button>
+  </div>
+ </div>`).join(''):'<div class="empty">まだ教科がありません。</div>';
+
+ const archived=data.subjects.filter(s=>s.archived);
+ document.getElementById('archiveList').innerHTML=archived.length?
+ archived.map(s=>`<div class="subject"><span>${esc(s.name)}</span>
+ <div class="actions">
+ <button onclick="restoreSubject(${s.id})">復元</button>
+ <button class="danger" onclick="deleteSubject(${s.id})">削除</button>
+ </div></div>`).join(''):'<div class="empty">保管した教科はありません。</div>';
+
+ document.getElementById('gradeList').innerHTML=data.grades.length?
+ data.grades.map(g=>`<div class="item"><strong>${esc(subjectName(g.subject))}・${esc(g.name)}</strong>
+ <div class="number">${g.score}点</div><p>${esc(g.date)}</p></div>`).join(''):
+ '<div class="empty">成績はまだありません。</div>';
+
+ document.getElementById('reviewList').innerHTML=data.reviews.length?
+ data.reviews.map(r=>`<div class="item">
+ <strong>${esc(subjectName(r.subject))}：${esc(r.text)}</strong>
+ <p>${esc(r.memo)}</p>
+ <span class="tag">${r.done?'復習済み':'復習が必要'}</span>
+ <div class="actions">
+ <button onclick="toggleReview(${r.id})">${r.done?'未完了に戻す':'復習完了'}</button>
+ <button class="danger" onclick="deleteReview(${r.id})">削除</button>
+ </div></div>`).join(''):'<div class="empty">復習問題はまだありません。</div>';
+
+ document.getElementById('scheduleList').innerHTML=data.schedules.length?
+ data.schedules.map(s=>`<div class="item">
+ <strong>${esc(s.day)}・${esc(s.period)}</strong>
+ <p>${esc(subjectName(s.subject))}</p>
+ <button class="danger" onclick="deleteSchedule(${s.id})">削除</button>
+ </div>`).join(''):'<div class="empty">時間割はまだありません。</div>';
+
+ const days=['日曜日','月曜日','火曜日','水曜日','木曜日','金曜日','土曜日'];
+ const today=days[new Date().getDay()];
+ const todayItems=data.schedules.filter(s=>s.day===today);
+ document.getElementById('todaySchedule').innerHTML=todayItems.length?
+ todayItems.map(s=>`${esc(s.period)}：${esc(subjectName(s.subject))}`).join('<br>'):
+ '今日の時間割は登録されていません。';
+
+ const pending=data.reviews.filter(r=>!r.done);
+ document.getElementById('reviewNotice').textContent=pending.length?
+ pending.length+'件の復習が必要だよ。':'復習が必要な問題はありません。';
+
+ const rec=activeSubjects();
+ document.getElementById('recommend').textContent= pending.length?
+ 'まずは復習が必要な問題に取り組もう。':
+ rec.length?'登録した教科を順番に復習してみよう。':
+ 'まずは教科を登録してみよう。';
+}
+function showPhoto(e){
+ const file=e.target.files[0];
+ if(!file)return;
+ const url=URL.createObjectURL(file);
+ const img=document.getElementById('preview');
+ img.src=url;img.classList.remove('hidden');
+ document.getElementById('photoStatus').textContent='写真を選択しました。AI要約には別途AI接続が必要です。';
+}
+function clearPhoto(){
+ document.getElementById('photo').value='';
+ document.getElementById('preview').classList.add('hidden');
+ document.getElementById('photoStatus').textContent='写真を選択するとここに表示されます。';
+}
+function exportData(){
+ const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement('a');
+ a.href=url;a.download='study-note-backup.json';a.click();
+ URL.revokeObjectURL(url);
+}
+function importData(e){
+ const file=e.target.files[0];if(!file)return;
+ const reader=new FileReader();
+ reader.onload=()=>{
+  try{
+   const d=JSON.parse(reader.result);
+   if(!d.subjects||!d.grades||!d.reviews||!d.schedules)throw Error();
+   if(!confirm('現在のデータをバックアップの内容に置き換える？'))return;
+   data=d;save();alert('復元できたよ！');
+  }catch(err){alert('バックアップファイルを読み込めませんでした。');}
+ };
+ reader.readAsText(file);
+}
+document.getElementById('today').textContent=
+ new Date().toLocaleDateString('ja-JP',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
+load();
+render();
+</script>
+</body>
+</html>
